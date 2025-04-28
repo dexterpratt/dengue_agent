@@ -1,0 +1,18 @@
+[
+  {
+    "id": "H1",
+    "title": "DENV NS1 inhibits IFN-β production",
+    "null_hypothesis": "DENV NS1 protein has no effect on IFN-β production in infected cells.",
+    "alternative_hypothesis": "DENV NS1 protein significantly inhibits IFN-β production in infected cells.",
+    "rationale": "Analysis shows NS1 has high propagation weight with MAVS and IRF3, which are critical for IFN-β induction. Experimental data shows decreased phosphorylation of IRF3 in the presence of NS1, suggesting inhibition of interferon signaling. This may represent a viral mechanism to subvert host immune response.",
+    "entities_involved": ["NS1", "MAVS", "IRF3", "IFN-β"],
+    "experimental_data_used": "IRF3 phosphorylation levels, protein interaction weights from propagation analysis",
+    "experimental_validation": [
+      "Measure IFN-β production in cells expressing NS1 vs control cells after stimulation",
+      "Assess IRF3 phosphorylation and nuclear translocation in presence/absence of NS1",
+      "Perform co-immunoprecipitation to detect direct interaction between NS1 and MAVS/IRF3"
+    ],
+    "confidence": 4,
+    "source_node": "DENV NS1"
+  }
+]

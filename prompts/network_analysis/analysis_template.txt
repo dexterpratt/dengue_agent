@@ -1,0 +1,32 @@
+Network Analysis Guidelines
+
+Extract the following information from the network for hypothesis generation:
+
+1. Basic Network Statistics:
+   - Node count
+   - Edge count
+   - Average node degree
+   - Type distribution
+
+2. Source Node Identification:
+   - Source node name and ID (viral protein)
+   - Source node type and properties
+
+3. Propagation Results:
+   - Top 10-15 nodes by propagation weight
+   - For each node:
+     - Name/Gene Symbol
+     - Propagation weight
+     - Node type
+     - Relevant experimental data
+
+4. Experimental Data Properties:
+   - Identify all numeric properties that might represent experimental data
+   - Group properties by type (expression, phosphorylation, etc.)
+   - Summarize range and distribution of values
+
+5. Pathway Enrichment:
+   - Identify potential biological pathways represented
+   - Group nodes by functional categories if possible
+
+This information should be structured to facilitate hypothesis generation about how the viral protein interacts with host proteins and affects cellular processes.

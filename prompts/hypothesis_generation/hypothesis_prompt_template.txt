@@ -1,0 +1,26 @@
+Based on a dengue virus network analysis for {viral_protein}, I need to generate {n_hypotheses} formal scientific hypotheses.
+
+The dataset includes the following experimental data properties for nodes: {experimental_properties}
+
+The propagation analysis identified the following top nodes with the highest propagation weights (most closely connected to the source node), along with their experimental data:
+
+{nodes_text}
+
+For each hypothesis, please:
+1. Propose a specific testable hypothesis about how {viral_protein} might interact with these nodes
+2. Focus on relationships supported by the experimental data shown above
+3. Format as formal null (H0) and alternative (H1) hypotheses
+4. Explain the biological rationale based on the nodes and experimental data involved
+5. Suggest specific experiments that could falsify the hypothesis
+
+Format each hypothesis as a JSON object with the following fields:
+- "title": A brief descriptive title for the hypothesis (5-10 words)
+- "null_hypothesis": The formal null hypothesis statement (H0)
+- "alternative_hypothesis": The formal alternative hypothesis statement (H1)
+- "rationale": Reasoning behind the hypothesis, referencing the experimental data (3-5 sentences)
+- "entities_involved": List of key entities mentioned in the hypothesis
+- "experimental_data_used": Brief description of which experimental data properties influenced this hypothesis
+- "experimental_validation": 2-3 specific experiments that could falsify the hypothesis
+- "confidence": A value from 1-5 indicating your confidence in this hypothesis (5 being highest)
+
+Return ONLY a valid JSON array of hypothesis objects. Do not include any explanation or other text outside the JSON.
