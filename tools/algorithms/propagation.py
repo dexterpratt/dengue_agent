@@ -111,14 +111,30 @@ def score_multi_seed_random_walk(
     # Track termination reason
     termination_reason = "unknown"
     
+    # Track forced restarts due to dead ends
+    forced_restart_count = 0
+    
     # Perform walk
     while cumulative_score < max_cumulative_score and step_count < max_steps:
         # Check if we have neighbors to visit
         neighbors = list(G.neighbors(current_node))
         
         if not neighbors:
-            termination_reason = "dead_end"
-            break
+            # Force a restart instead of terminating with "dead_end"
+            forced_restart_count += 1
+            current_node = select_seed_node()
+            current_seed = current_node  # Track current seed for contribution
+            path.append(current_node)
+            restart_count += 1
+            visit_counts[current_node] += 1
+            cumulative_score += get_node_score(current_node)
+            step_count += 1
+            
+            # Update seed contribution
+            seed_contributions[current_seed][current_node] += 1
+            
+            # Continue to next iteration
+            continue
             
         # Filter neighbors that have already been visited if revisits not allowed
         if not allow_revisits:
@@ -126,18 +142,10 @@ def score_multi_seed_random_walk(
             if unvisited_neighbors:
                 neighbors = unvisited_neighbors
             elif not any(seed in neighbors for seed in seed_nodes):
-                # If all neighbors visited and no seed in neighbors
-                termination_reason = "all_neighbors_visited"
-                break
-        
-        # Decide whether to restart
-        if random.random() < restart_prob:
-            # Select a seed node based on strategy
-            next_seed = select_seed_node()
-            
-            if current_node != next_seed:  # Only count as restart if moving to different node
-                current_node = next_seed
-                current_seed = next_seed  # Track current seed for contribution
+                # If all neighbors visited and no seed in neighbors, force a restart
+                forced_restart_count += 1
+                current_node = select_seed_node()
+                current_seed = current_node  # Track current seed for contribution
                 path.append(current_node)
                 restart_count += 1
                 visit_counts[current_node] += 1
@@ -146,6 +154,26 @@ def score_multi_seed_random_walk(
                 
                 # Update seed contribution
                 seed_contributions[current_seed][current_node] += 1
+                
+                # Continue to next iteration
+                continue
+        
+        # Decide whether to restart
+        if random.random() < restart_prob:
+            # Select a seed node based on strategy
+            next_seed = select_seed_node()
+            
+            # Always perform the restart, even if it's to the same node
+            current_node = next_seed
+            current_seed = next_seed  # Track current seed for contribution
+            path.append(current_node)
+            restart_count += 1
+            visit_counts[current_node] += 1
+            cumulative_score += get_node_score(current_node)
+            step_count += 1
+            
+            # Update seed contribution
+            seed_contributions[current_seed][current_node] += 1
         else:
             # Choose random neighbor
             next_node = random.choice(neighbors)
@@ -185,6 +213,7 @@ def score_multi_seed_random_walk(
             'cumulative_score': cumulative_score,
             'steps': step_count,
             'restarts': restart_count,
+            'forced_restarts': forced_restart_count,  # Added new stat
             'termination_reason': termination_reason,
             'seed_nodes': seed_nodes,
             'seed_selection_strategy': seed_selection_strategy

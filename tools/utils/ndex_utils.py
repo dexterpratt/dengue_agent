@@ -23,7 +23,7 @@ def load_ndex_credentials():
     Returns:
         Tuple of (username, password)
     """
-    username = os.environ.get("NDEX_USERNAME", "")
+    username = os.environ.get("NDEX_ACCOUNT", "")
     password = os.environ.get("NDEX_PASSWORD", "")
     return username, password
 
